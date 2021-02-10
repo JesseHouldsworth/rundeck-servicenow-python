@@ -1,0 +1,37 @@
+version: '3'
+services:
+  demos011:
+    build:
+      context: .
+      args:
+        IMAGE: ${RUNDECK_IMAGE:-rundeckpro/enterprise:3.3.9}
+    hostname: batman1
+    container_name: demos011
+#    command: "-Xms4g"
+    ports:
+      - '4440:4440'
+    environment:
+      RUNDECK_SERVER_TAGS: front
+      RUNDECK_GRAILS_URL: http://localhost:4440
+      RUNDECK_SERVER_SERVLET_CONTEXT: /
+      RUNDECK_SERVER_UUID: 01010101-0101-0101-0101-010101010101
+      RUNDECK_SERVER_FORWARDED: "true"
+      RUNDECK_PREAUTH_ENABLED: "true"
+      RUNDECK_PREAUTH_ATTRIBUTE_NAME: REMOTE_USER_GROUPS
+      RUNDECK_PREAUTH_DELIMITER: ","
+      RUNDECK_PREAUTH_USERNAME_HEADER: X-Forwarded-User
+      RUNDECK_PREAUTH_ROLES_HEADER: X-Forwarded-Roles
+      #encryption
+      RUNDECK_STORAGE_CONVERTER_1_CONFIG_PASSWORD: ${RUNDECK_STORAGE_PASSWORD}
+      RUNDECK_CONFIG_STORAGE_CONVERTER_1_CONFIG_PASSWORD: ${RUNDECK_STORAGE_PASSWORD}
+      RUNDECK_CONFIG_STORAGE_CONVERTER_1_PATH: projects
+      #servicenow
+      RUNDECK_PLUGIN_SERVICENOW_URL: https://dev93600.service-now.com
+      RUNDECK_PLUGIN_SERVICENOW_LOGIN: admin
+      RUNDECK_PLUGIN_SERVICENOW_KEY: keys/servicenow
+    volumes:
+      - ./logstorage:/home/rundeck/var/logs
+    networks:
+      - demos
+networks:
+  demos:

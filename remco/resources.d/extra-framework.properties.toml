@@ -1,0 +1,4 @@
+[[template]]
+    src         = "${REMCO_TEMPLATE_DIR}/extra-framework.properties"
+    dst         = "${REMCO_TMP_DIR}/framework/extra-framework.properties"
+    mode        = "0644"
