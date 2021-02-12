@@ -42,6 +42,9 @@ RUN apt-get install -y nano
 RUN apt-get update && apt-get install -y git
 RUN apt-get update && apt-get -y install awscli
 
+#Oracle JDBC driver
+RUN COPY --chown=rundeck:root jdbcdriver ./server/lib
+
 USER rundeck
 #ansible
 # ENV RDECK_BASE=/home/rundeck \
